@@ -11,6 +11,16 @@ const styles = {
    background: 'linear-gradient(135deg, #4169E1 0%, #6A5ACD 100%)',
    fontFamily: 'system-ui, -apple-system, sans-serif'
  },
+ inputGroup: {
+  marginBottom: '20px'
+},
+inputLabel: {
+  display: 'block',
+  marginBottom: '8px',
+  color: '#555',
+  fontSize: '16px',
+  fontWeight: '500'
+},
  appTitle: {
    fontSize: '36px',
    fontWeight: 'bold',
