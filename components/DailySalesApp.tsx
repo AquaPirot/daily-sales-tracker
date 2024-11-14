@@ -327,7 +327,7 @@ export default function DailySalesApp() {
                   <option value="">Izaberite tip</option>
                   <option value="storno">Stornirani račun</option>
                   <option value="discount">Odobreni popust</option>
-                  <option value="complaint">Reklamacija</option>
+                  <option value="complaint">Plaćeno iz depozita</option>
                 </select>
                 <div style={styles.flexRow}>
                   <input
