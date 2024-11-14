@@ -19,6 +19,25 @@ const styles = {
    marginBottom: '40px',
    textShadow: '0 2px 4px rgba(0,0,0,0.2)'
  },
+ denominationText: {
+    width: '60px', // smanjujemo širinu
+    fontSize: '16px',
+    color: '#333'
+  },
+  numberInput: {
+    width: '80px', // smanjujemo širinu inputa
+    padding: '8px',
+    border: '1px solid #e0e0e0',
+    borderRadius: '8px',
+    fontSize: '16px',
+    textAlign: 'center' as const,
+    backgroundColor: 'white'
+  },
+  resultText: {
+    minWidth: '90px', // fiksna širina za rezultat
+    textAlign: 'right' as const,
+    fontSize: '16px'
+  },
  card: {
    backgroundColor: 'white',
    borderRadius: '16px',
@@ -85,21 +104,28 @@ const styles = {
  },
  flexRow: {
    display: 'flex',
-   alignItems: 'center',
-   gap: '16px',
-   marginBottom: '16px',
-   padding: '12px',
-   backgroundColor: '#f8f9fa',
-   borderRadius: '12px'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '10px 0',
+    width: '100%'
  },
- numberInput: {
-   width: '100px',
-   padding: '12px',
-   border: '2px solid #e0e0e0',
-   borderRadius: '12px',
-   fontSize: '16px',
-   backgroundColor: 'white',
-   textAlign: 'center' as const
+noteCard: {
+  backgroundColor: '#f8f9fa',
+  borderRadius: '8px',
+  padding: '12px',
+  marginBottom: '12px'
+},
+selectInput: {
+  width: '100%',
+  marginBottom: '8px',
+  padding: '8px',
+  borderRadius: '8px',
+  border: '1px solid #e0e0e0'
+},
+noteInputsContainer: {
+  display: 'flex',
+  gap: '8px',
+  marginBottom: '8px'
  },
  summaryBox: {
    backgroundColor: '#f8f9fa',
@@ -285,20 +311,20 @@ export default function DailySalesApp() {
        <div style={styles.card}>
          <h2 style={styles.title}>Gotovinski promet</h2>
          {[5000, 2000, 1000, 500, 200, 100, 50, 20, 10].map(value => (
-           <div key={value} style={styles.flexRow}>
-             <label style={styles.label}>{value} RSD</label>
-             <input
-               type="number"
-               style={styles.numberInput}
-               value={formData.cash[`rsd${value}` as keyof typeof formData.cash]}
-               onChange={e => handleCashChange(`rsd${value}`, e.target.value)}
-               min="0"
-             />
-             <span style={styles.summaryValue}>
-               = {(formData.cash[`rsd${value}` as keyof typeof formData.cash] * value).toLocaleString()} RSD
-             </span>
-           </div>
-         ))}
+  <div key={value} style={styles.flexRow}>
+    <span style={styles.denominationText}>{value}</span>
+    <input
+      type="number"
+      style={styles.numberInput}
+      value={formData.cash[`rsd${value}` as keyof typeof formData.cash]}
+      onChange={e => handleCashChange(`rsd${value}`, e.target.value)}
+      min="0"
+    />
+    <span style={styles.resultText}>
+      = {(formData.cash[`rsd${value}` as keyof typeof formData.cash] * value).toLocaleString()}
+    </span>
+  </div>
+))}
          <div style={{...styles.flexRow, marginTop: '20px'}}>
            <label style={styles.label}>EUR</label>
            <input
@@ -323,35 +349,31 @@ export default function DailySalesApp() {
 
      {/* Kartice i virmani */}
      {step === 2 && (
-       <div style={styles.card}>
-         <h2 style={styles.title}>Kartice i virmani</h2>
-         <div>
-           <label style={styles.label}>Ukupan iznos kartica</label>
-           <input
-             type="number"
-             style={styles.input}
-             value={formData.cardTotal}
-             onChange={e => setFormData(prev => ({ ...prev, cardTotal: Number(e.target.value) || 0 }))}
-             min="0"
-           />
-           <label style={styles.label}>Ukupan iznos virmana</label>
-           <input
-             type="number"
-             style={styles.input}
-             value={formData.transferTotal}
-             onChange={e => setFormData(prev => ({ ...prev, transferTotal: Number(e.target.value) || 0 }))}
-             min="0"
-           />
-           <div style={styles.summaryBox}>
-             <div style={styles.summaryRow}>
-               <span>Ukupno kartice:</span>
-               <span>{formData.cardTotal.toLocaleString()} RSD</span>
-             </div>
-             <div style={styles.summaryRow}>
-               <span>Ukupno virmani:</span>
-               <span>{formData.transferTotal.toLocaleString()} RSD</span>
-             </div>
-           </div>
+<div style={styles.card}>
+  <h2 style={styles.title}>Kartice i virmani</h2>
+  <div style={styles.inputGroup}>
+    <label style={styles.inputLabel}>Ukupan iznos kartica</label>
+    <input
+      type="number"
+      style={styles.input}
+      value={formData.cardTotal}
+      onChange={e => setFormData(prev => ({ ...prev, cardTotal: Number(e.target.value) || 0 }))}
+    />
+  </div>
+  <div style={styles.inputGroup}>
+    <label style={styles.inputLabel}>Ukupan iznos virmana</label>
+    <input
+      type="number"
+      style={styles.input}
+      value={formData.transferTotal}
+      onChange={e => setFormData(prev => ({ ...prev, transferTotal: Number(e.target.value) || 0 }))}
+    />
+  </div>
+  <div style={styles.summaryContainer}>
+    <div style={styles.summaryRow}>Ukupno kartice: {formData.cardTotal.toLocaleString()} RSD</div>
+    <div style={styles.summaryRow}>Ukupno virmani: {formData.transferTotal.toLocaleString()} RSD</div>
+  </div>
+</div>
          </div>
        </div>
      )}
