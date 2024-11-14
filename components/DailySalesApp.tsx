@@ -203,7 +203,7 @@ export default function DailySalesApp() {
    const typeText = {
      'storno': 'Stornirani račun',
      'discount': 'Odobreni popust',
-     'complaint': 'Reklamacija'
+     'complaint': 'Plaćeno iz depozita'
    }[note.type] || 'Napomena';
    
    return `${typeText} - Račun br. ${note.receiptNumber}, iznos: ${note.amount.toLocaleString()} RSD`;
@@ -391,7 +391,7 @@ export default function DailySalesApp() {
                  <option value="">Izaberite tip</option>
                  <option value="storno">Stornirani račun</option>
                  <option value="discount">Odobreni popust</option>
-                 <option value="complaint">Reklamacija</option>
+                 <option value="complaint">Plaćeno iz depozita</option>
                </select>
                <div style={styles.flexRow}>
                  <input
