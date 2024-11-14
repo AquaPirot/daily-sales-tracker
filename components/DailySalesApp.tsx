@@ -358,32 +358,32 @@ export default function DailySalesApp() {
      )}
 
      {/* Kartice i virmani */}
-    {step === 2 && (
-<div style={styles.card}>
-  <h2 style={styles.title}>Kartice i virmani</h2>
-  <div style={styles.inputGroup}>
-    <label style={styles.inputLabel}>Ukupan iznos kartica</label>
-    <input
-      type="number"
-      style={styles.input}
-      value={formData.cardTotal}
-      onChange={e => setFormData(prev => ({ ...prev, cardTotal: Number(e.target.value) || 0 }))}
-    />
+{step === 2 && (
+  <div style={styles.card}>
+    <h2 style={styles.title}>Kartice i virmani</h2>
+    <div style={styles.inputGroup}>
+      <label style={styles.inputLabel}>Ukupan iznos kartica</label>
+      <input
+        type="number"
+        style={styles.input}
+        value={formData.cardTotal}
+        onChange={e => setFormData(prev => ({ ...prev, cardTotal: Number(e.target.value) || 0 }))}
+      />
+    </div>
+    <div style={styles.inputGroup}>
+      <label style={styles.inputLabel}>Ukupan iznos virmana</label>
+      <input
+        type="number"
+        style={styles.input}
+        value={formData.transferTotal}
+        onChange={e => setFormData(prev => ({ ...prev, transferTotal: Number(e.target.value) || 0 }))}
+      />
+    </div>
+    <div style={styles.summaryBox}>
+      <div style={styles.summaryRow}>Ukupno kartice: {formData.cardTotal.toLocaleString()} RSD</div>
+      <div style={styles.summaryRow}>Ukupno virmani: {formData.transferTotal.toLocaleString()} RSD</div>
+    </div>
   </div>
-  <div style={styles.inputGroup}>
-    <label style={styles.inputLabel}>Ukupan iznos virmana</label>
-    <input
-      type="number"
-      style={styles.input}
-      value={formData.transferTotal}
-      onChange={e => setFormData(prev => ({ ...prev, transferTotal: Number(e.target.value) || 0 }))}
-    />
-  </div>
-  <div style={styles.summaryContainer}>
-    <div style={styles.summaryRow}>Ukupno kartice: {formData.cardTotal.toLocaleString()} RSD</div>
-    <div style={styles.summaryRow}>Ukupno virmani: {formData.transferTotal.toLocaleString()} RSD</div>
-   </div>
- </div>
 )}
     
      {/* Sastavljač */}
