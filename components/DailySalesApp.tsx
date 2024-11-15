@@ -591,25 +591,27 @@ const handleCashChange = (denomination: string, value: string) => {
      )}
 
      {/* Navigacija */}
-<div style={styles.buttonContainer}>
-  {step > 0 && (
-    <button
-      style={styles.buttonSecondary}
-      onClick={() => setStep(s => s - 1)}
-    >
-      Nazad
-    </button>
-  )}
-  {step < 5 && (
-    <button
-      style={{...styles.buttonPrimary, marginLeft: 'auto'}}
-      onClick={() => setStep(s => s + 1)}
-    >
-      Dalje
-    </button>
-  )}
-</div>
+ <div style={styles.buttonContainer}>
+      {step > 0 && (
+        <button
+          style={styles.buttonSecondary}
+          onClick={() => setStep(s => s - 1)}
+        >
+          Nazad
+        </button>
+      )}
+      {step < 5 && (
+        <button
+          style={{...styles.buttonPrimary, marginLeft: 'auto'}}
+          onClick={() => setStep(s => s + 1)}
+        >
+          Dalje
+        </button>
+      )}
+    </div>
 
-<div style={styles.footer}>
-  Powered by AG group
-</div>
+    <div style={styles.footer}>
+      Powered by AG group
+    </div>
+  </div> 
+);
