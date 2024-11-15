@@ -591,7 +591,7 @@ const handleCashChange = (denomination: string, value: string) => {
      )}
 
      {/* Navigacija */}
-    <div style={styles.buttonContainer}>
+ <div style={styles.buttonContainer}>
       {step > 0 && (
         <button
           style={styles.buttonSecondary}
@@ -610,8 +610,8 @@ const handleCashChange = (denomination: string, value: string) => {
       )}
     </div>
     
-    <footer style={styles.footer}>
+    <div style={styles.footer}>
       Powered by AG group
-    </footer>
+    </div>
   </div>
 );
