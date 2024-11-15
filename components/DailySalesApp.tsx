@@ -613,4 +613,3 @@ const handleCashChange = (denomination: string, value: string) => {
 <div style={styles.footer}>
   Powered by AG group
 </div>
-</div>
