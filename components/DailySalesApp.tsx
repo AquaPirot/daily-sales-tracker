@@ -12,14 +12,14 @@ const styles = {
    fontFamily: 'system-ui, -apple-system, sans-serif'
  },
  inputGroup: {
-  marginBottom: '20px'
+  marginBottom: '20px' as const
 },
 inputLabel: {
-  display: 'block',
+  display: 'block' as const,
   marginBottom: '8px',
   color: '#555',
   fontSize: '16px',
-  fontWeight: '500'
+  fontWeight: '500' as const
 },
  appTitle: {
    fontSize: '36px',
@@ -43,7 +43,7 @@ inputLabel: {
     fontSize: '16px',
     textAlign: 'center' as const,
     backgroundColor: 'white',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box' as const 
   },
   resultText: {
     minWidth: '90px', // fiksna širina za rezultat
@@ -377,7 +377,7 @@ export default function DailySalesApp() {
         style={{
           ...styles.input,
           maxWidth: '100%',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box' as const // dodajemo 'as const'
         }}
         value={formData.cardTotal === 0 ? '' : formData.cardTotal}
         onChange={e => {
@@ -399,7 +399,7 @@ export default function DailySalesApp() {
         style={{
           ...styles.input,
           maxWidth: '100%',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box' as const // dodajemo 'as const'
         }}
         value={formData.transferTotal === 0 ? '' : formData.transferTotal}
         onChange={e => {
