@@ -3,29 +3,26 @@
 import React, { useState } from 'react';
 
 const styles = {
- container: {
-   maxWidth: '800px',
-   margin: '0 auto',
-   padding: '20px',
-   minHeight: '100vh',
-   background: 'linear-gradient(135deg, #4169E1 0%, #6A5ACD 100%)',
-   fontFamily: 'system-ui, -apple-system, sans-serif',
-   position: 'relative' as const, 
-   paddingBottom: '60px'
+container: {
+  maxWidth: '800px',
+  margin: '0 auto',
+  padding: '20px',
+  minHeight: '100vh',
+  background: 'linear-gradient(135deg, #4169E1 0%, #6A5ACD 100%)',
+  fontFamily: 'system-ui, -apple-system, sans-serif',
+  display: 'flex',
+  flexDirection: 'column' as const
  },
  inputGroup: {
   marginBottom: '20px' as const
 },
- footer: {
-    position: 'absolute' as const,
-    bottom: '20px',
-    left: '0',
-    right: '0',
-    textAlign: 'center' as const,
-    color: 'white',
-    fontSize: '14px',
-    opacity: '0.8',
-    textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+footer: {
+  width: '100%',
+  textAlign: 'center' as const,
+  color: 'white',
+  fontSize: '14px',
+  padding: '20px 0',
+  marginTop: 'auto'
   },
 inputLabel: {
   display: 'block' as const,
@@ -334,9 +331,6 @@ const handleCashChange = (denomination: string, value: string) => {
              <option value="I">I smena</option>
              <option value="II">II smena</option>
            </select>
-          {/* Footer na dnu */}
-    <div style={styles.footer}>
-      Powered by AG group
          </div>
        </div>
      )}
@@ -597,24 +591,27 @@ const handleCashChange = (denomination: string, value: string) => {
      )}
 
      {/* Navigacija */}
-     <div style={styles.buttonContainer}>
-       {step > 0 && (
-         <button
-           style={styles.buttonSecondary}
-           onClick={() => setStep(s => s - 1)}
-         >
-           Nazad
-         </button>
-       )}
-       {step < 5 && (
-         <button
-           style={{...styles.buttonPrimary, marginLeft: 'auto'}}
-           onClick={() => setStep(s => s + 1)}
-         >
-           Dalje
-         </button>
-       )}
-     </div>
-   </div>
- );
-}
+    <div style={styles.buttonContainer}>
+      {step > 0 && (
+        <button
+          style={styles.buttonSecondary}
+          onClick={() => setStep(s => s - 1)}
+        >
+          Nazad
+        </button>
+      )}
+      {step < 5 && (
+        <button
+          style={{...styles.buttonPrimary, marginLeft: 'auto'}}
+          onClick={() => setStep(s => s + 1)}
+        >
+          Dalje
+        </button>
+      )}
+    </div>
+    
+    <footer style={styles.footer}>
+      Powered by AG group
+    </footer>
+  </div>
+);
