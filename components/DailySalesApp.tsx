@@ -446,74 +446,80 @@ const handleCashChange = (denomination: string, value: string) => {
      )}
 
      {/* Napomene */}
-     {step === 4 && (
-       <div style={styles.card}>
-         <h2 style={styles.title}>Napomene</h2>
-         <div>
-           {formData.notes.map((note, index) => (
-             <div key={index} style={{...styles.card, marginBottom: '16px'}}>
-               <select
-                 style={styles.select}
-                 value={note.type}
-                 onChange={e => {
-                   const newNotes = [...formData.notes];
-                   newNotes[index] = { ...newNotes[index], type: e.target.value };
-                   setFormData(prev => ({ ...prev, notes: newNotes }));
-                 }}
-               >
-                 <option value="">Izaberite tip</option>
-                 <option value="storno">Stornirani račun</option>
-                 <option value="discount">Odobreni popust</option>
-                 <option value="complaint">Plaćeno iz depozita</option>
-               </select>
-               <div style={styles.flexRow}>
-                 <input
-                   type="text"
-                   style={{...styles.numberInput, width: '140px'}}
-                   placeholder="Broj računa"
-                   value={note.receiptNumber}
-                   onChange={e => {
-                     const newNotes = [...formData.notes];
-                     newNotes[index] = { ...newNotes[index], receiptNumber: e.target.value };
-                     setFormData(prev => ({ ...prev, notes: newNotes }));
-                   }}
-                 />
-                 <input
-                   type="number"
-                   style={{...styles.numberInput, flex: 1}}
-                   placeholder="Iznos"
-                   value={note.amount}
-                   onChange={e => {
-                     const newNotes = [...formData.notes];
-                     newNotes[index] = { ...newNotes[index], amount: Number(e.target.value) || 0 };
-                                          setFormData(prev => ({ ...prev, notes: newNotes }));
-                   }}
-                   min="0"
-                 />
-                 <button
-                   style={{...styles.buttonSecondary, padding: '8px 16px'}}
-                   onClick={() => {
-                     const newNotes = formData.notes.filter((_, i) => i !== index);
-                     setFormData(prev => ({ ...prev, notes: newNotes }));
-                   }}
-                 >
-                   Ukloni
-                 </button>
-               </div>
-             </div>
-           ))}
-           <button
-             style={styles.buttonPrimary}
-             onClick={() => setFormData(prev => ({
-               ...prev,
-               notes: [...prev.notes, { type: '', receiptNumber: '', amount: 0 }]
-             }))}
-           >
-             + Dodaj napomenu
-           </button>
-         </div>
-       </div>
-     )}
+    {step === 4 && (
+  <div style={styles.card}>
+    <h2 style={styles.title}>Napomene</h2>
+    <div>
+      {formData.notes.map((note, index) => (
+        <div key={index} style={{...styles.card, marginBottom: '16px'}}>
+          <select
+            style={styles.select}
+            value={note.type}
+            onChange={e => {
+              const newNotes = [...formData.notes];
+              newNotes[index] = { ...newNotes[index], type: e.target.value };
+              setFormData(prev => ({ ...prev, notes: newNotes }));
+            }}
+          >
+            <option value="">Izaberite tip</option>
+            <option value="storno">Stornirani račun</option>
+            <option value="discount">Odobreni popust</option>
+            <option value="complaint">Plaćeno iz depozita</option>
+          </select>
+          <div style={styles.flexRow}>
+            <input
+              type="text"
+              style={{...styles.numberInput, width: '140px'}}
+              placeholder="Broj računa"
+              value={note.receiptNumber}
+              onChange={e => {
+                const newNotes = [...formData.notes];
+                newNotes[index] = { ...newNotes[index], receiptNumber: e.target.value };
+                setFormData(prev => ({ ...prev, notes: newNotes }));
+              }}
+            />
+            <input
+              type="number"
+              style={{...styles.numberInput, flex: 1}}
+              placeholder="Iznos"
+              value={note.amount === 0 ? '' : note.amount}
+              onChange={e => {
+                const newNotes = [...formData.notes];
+                const cleanValue = e.target.value.replace(/^0+/, '');
+                newNotes[index] = { 
+                  ...newNotes[index], 
+                  amount: cleanValue === '' ? 0 : Number(cleanValue)
+                };
+                setFormData(prev => ({ ...prev, notes: newNotes }));
+              }}
+              pattern="[0-9]*"
+              inputMode="numeric"
+              min="0"
+            />
+            <button
+              style={{...styles.buttonSecondary, padding: '8px 16px'}}
+              onClick={() => {
+                const newNotes = formData.notes.filter((_, i) => i !== index);
+                setFormData(prev => ({ ...prev, notes: newNotes }));
+              }}
+            >
+              Ukloni
+            </button>
+          </div>
+        </div>
+      ))}
+      <button
+        style={styles.buttonPrimary}
+        onClick={() => setFormData(prev => ({
+          ...prev,
+          notes: [...prev.notes, { type: '', receiptNumber: '', amount: 0 }]
+        }))}
+      >
+        + Dodaj napomenu
+      </button>
+    </div>
+  </div>
+)}
 
      {/* Pregled i slanje */}
      {step === 5 && (
