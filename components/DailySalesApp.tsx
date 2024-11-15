@@ -9,11 +9,24 @@ const styles = {
    padding: '20px',
    minHeight: '100vh',
    background: 'linear-gradient(135deg, #4169E1 0%, #6A5ACD 100%)',
-   fontFamily: 'system-ui, -apple-system, sans-serif'
+   fontFamily: 'system-ui, -apple-system, sans-serif',
+   position: 'relative' as const, 
+   paddingBottom: '60px'
  },
  inputGroup: {
   marginBottom: '20px' as const
 },
+ footer: {
+    position: 'absolute' as const,
+    bottom: '20px',
+    left: '0',
+    right: '0',
+    textAlign: 'center' as const,
+    color: 'white',
+    fontSize: '14px',
+    opacity: '0.8',
+    textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+  },
 inputLabel: {
   display: 'block' as const,
   marginBottom: '8px',
@@ -321,6 +334,9 @@ const handleCashChange = (denomination: string, value: string) => {
              <option value="I">I smena</option>
              <option value="II">II smena</option>
            </select>
+          {/* Footer na dnu */}
+    <div style={styles.footer}>
+      Powered by AG group
          </div>
        </div>
      )}
