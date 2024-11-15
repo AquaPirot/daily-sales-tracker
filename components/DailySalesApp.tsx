@@ -36,12 +36,14 @@ inputLabel: {
   },
   numberInput: {
     width: '80px', // smanjujemo širinu inputa
+    maxWidth: '100%',
     padding: '8px',
     border: '1px solid #e0e0e0',
     borderRadius: '8px',
     fontSize: '16px',
     textAlign: 'center' as const,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    boxSizing: 'border-box'
   },
   resultText: {
     minWidth: '90px', // fiksna širina za rezultat
@@ -71,6 +73,7 @@ inputLabel: {
  },
  input: {
    width: '100%',
+   maxWidth: '100%',
    padding: '12px 16px',
    border: '2px solid #e0e0e0',
    borderRadius: '12px',
@@ -226,14 +229,18 @@ export default function DailySalesApp() {
  };
 
  const handleCashChange = (denomination: string, value: string) => {
-   setFormData(prev => ({
-     ...prev,
-     cash: {
-       ...prev.cash,
-       [denomination]: Number(value) || 0
-     }
-   }));
- };
+  // Uklanjamo vodeće nule i konvertujemo u broj
+  const cleanValue = value.replace(/^0+/, '');
+  
+  setFormData(prev => ({
+    ...prev,
+    cash: {
+      ...prev.cash,
+      [denomination]: cleanValue === '' ? 0 : Number(cleanValue)
+    }
+  }));
+};
+
 
  const formatNote = (note: { type: string; receiptNumber: string; amount: number }) => {
    const typeText = {
@@ -329,6 +336,8 @@ export default function DailySalesApp() {
       value={formData.cash[`rsd${value}` as keyof typeof formData.cash]}
       onChange={e => handleCashChange(`rsd${value}`, e.target.value)}
       min="0"
+      pattern="[0-9]*"
+      inputMode="numeric"
     />
     <span style={styles.resultText}>
       = {(formData.cash[`rsd${value}` as keyof typeof formData.cash] * value).toLocaleString()}
@@ -365,18 +374,44 @@ export default function DailySalesApp() {
       <label style={styles.inputLabel}>Ukupan iznos kartica</label>
       <input
         type="number"
-        style={styles.input}
-        value={formData.cardTotal}
-        onChange={e => setFormData(prev => ({ ...prev, cardTotal: Number(e.target.value) || 0 }))}
+        style={{
+          ...styles.input,
+          maxWidth: '100%',
+          boxSizing: 'border-box'
+        }}
+        value={formData.cardTotal === 0 ? '' : formData.cardTotal}
+        onChange={e => {
+          const cleanValue = e.target.value.replace(/^0+/, '');
+          setFormData(prev => ({ 
+            ...prev, 
+            cardTotal: cleanValue === '' ? 0 : Number(cleanValue) 
+          }));
+        }}
+        pattern="[0-9]*"
+        inputMode="numeric"
+        placeholder="0"
       />
     </div>
     <div style={styles.inputGroup}>
       <label style={styles.inputLabel}>Ukupan iznos virmana</label>
       <input
         type="number"
-        style={styles.input}
-        value={formData.transferTotal}
-        onChange={e => setFormData(prev => ({ ...prev, transferTotal: Number(e.target.value) || 0 }))}
+        style={{
+          ...styles.input,
+          maxWidth: '100%',
+          boxSizing: 'border-box'
+        }}
+        value={formData.transferTotal === 0 ? '' : formData.transferTotal}
+        onChange={e => {
+          const cleanValue = e.target.value.replace(/^0+/, '');
+          setFormData(prev => ({ 
+            ...prev, 
+            transferTotal: cleanValue === '' ? 0 : Number(cleanValue) 
+          }));
+        }}
+        pattern="[0-9]*"
+        inputMode="numeric"
+        placeholder="0"
       />
     </div>
     <div style={styles.summaryBox}>
