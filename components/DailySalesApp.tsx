@@ -30,13 +30,14 @@ inputLabel: {
    textShadow: '0 2px 4px rgba(0,0,0,0.2)'
  },
  denominationText: {
-    width: '60px', // smanjujemo širinu
+    width: '50px', // smanjujemo širinu
     fontSize: '16px',
-    color: '#333'
+    color: '#333',
+    flexShrink: 0 as const
   },
   numberInput: {
     width: '80px', // smanjujemo širinu inputa
-    maxWidth: '100%',
+    maxWidth: '80%',
     padding: '8px',
     border: '1px solid #e0e0e0',
     borderRadius: '8px',
@@ -46,9 +47,11 @@ inputLabel: {
     boxSizing: 'border-box' as const 
   },
   resultText: {
-    minWidth: '90px', // fiksna širina za rezultat
+    minWidth: '80px', // fiksna širina za rezultat
+    maxWidth: '90px',
     textAlign: 'right' as const,
-    fontSize: '16px'
+    fontSize: '16px',
+    flexShrink: 0 as const
   },
  card: {
    backgroundColor: 'white',
@@ -120,7 +123,8 @@ inputLabel: {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '10px 0',
-    width: '100%'
+    width: '100%',
+    gap: '8px'
  },
 noteCard: {
   backgroundColor: '#f8f9fa',
@@ -228,10 +232,8 @@ export default function DailySalesApp() {
    return calculateCash() + formData.cardTotal + formData.transferTotal;
  };
 
- const handleCashChange = (denomination: string, value: string) => {
-  // Uklanjamo vodeće nule i konvertujemo u broj
-  const cleanValue = value.replace(/^0+/, '');
-  
+const handleCashChange = (denomination: string, value: string) => {
+  const cleanValue = value.replace(/^0+/, ''); // uklanjamo vodeće nule
   setFormData(prev => ({
     ...prev,
     cash: {
@@ -333,11 +335,14 @@ export default function DailySalesApp() {
     <input
       type="number"
       style={styles.numberInput}
-      value={formData.cash[`rsd${value}` as keyof typeof formData.cash]}
+      value={formData.cash[`rsd${value}` as keyof typeof formData.cash] === 0 
+        ? '' 
+        : formData.cash[`rsd${value}` as keyof typeof formData.cash]}
       onChange={e => handleCashChange(`rsd${value}`, e.target.value)}
       min="0"
       pattern="[0-9]*"
       inputMode="numeric"
+      placeholder="0"
     />
     <span style={styles.resultText}>
       = {(formData.cash[`rsd${value}` as keyof typeof formData.cash] * value).toLocaleString()}
@@ -345,18 +350,21 @@ export default function DailySalesApp() {
   </div>
 ))}
          <div style={{...styles.flexRow, marginTop: '20px'}}>
-           <label style={styles.label}>EUR</label>
-           <input
-             type="number"
-             style={styles.numberInput}
-             value={formData.cash.eur}
-             onChange={e => handleCashChange('eur', e.target.value)}
-             min="0"
-           />
-           <span style={styles.summaryValue}>
-             = {(formData.cash.eur * 116).toLocaleString()} RSD
-           </span>
-         </div>
+  <span style={styles.denominationText}>EUR</span>
+  <input
+    type="number"
+    style={styles.numberInput}
+    value={formData.cash.eur === 0 ? '' : formData.cash.eur}
+    onChange={e => handleCashChange('eur', e.target.value)}
+    min="0"
+    pattern="[0-9]*"
+    inputMode="numeric"
+    placeholder="0"
+  />
+  <span style={styles.resultText}>
+    = {(formData.cash.eur * 116).toLocaleString()} RSD
+  </span>
+</div>
          <div style={styles.summaryBox}>
            <div style={styles.summaryTotal}>
              <span>Ukupno gotovine:</span>
